@@ -17,5 +17,4 @@ jobs:
 
     - name: Build test container
       run: |
-        docker build . --file Dockerfile-test -t miniconda3-test
         docker run miniconda3-test /bin/bash -c "source /venv/bin/activate;python --version"
