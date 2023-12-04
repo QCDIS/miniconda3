@@ -1,0 +1,21 @@
+name: Docker Image CI cron
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 3 * *'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: build image
+      run: |
+        docker build . --file Dockerfile -t miniconda3
+
+    - name: Build test container
+      run: |
+        docker build . --file Dockerfile-test -t miniconda3-test
+        docker run miniconda3-test /bin/bash -c "source /venv/bin/activate;python --version"
